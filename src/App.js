@@ -7,19 +7,19 @@ import calculate from './logic/calculate';
 class App extends Component {
   state = {
     preValue: 0, 
-    value: 100,
+    expression: '0',
     operator: null
    }; 
 
   handleClick = (btnName) => {
-        this.setState(calculate(this.state, btnName));
-        console.log('this.state = ', this.state);
+    console.log('Button = is clicked');
+    this.setState(calculate(this.state, btnName))
   };
 
   render() { 
     return (
       <div>
-        <Display value={this.state.value}/>
+        <Display expression={this.state.expression}/>
         <ButtonPanel clickHandler={this.handleClick}/>
       </div>
     );
