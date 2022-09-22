@@ -1,6 +1,4 @@
 function Infix2Postfix(expression) {
-    // num . + - x ÷ ( ) sin cos tan
-    // 5.2 + 4 x 6 - 3 x sin3 + 4 x 5) + 3 x 7.14
     let number = "";
     let postfix = [];
     let stack = [];
@@ -50,42 +48,32 @@ function Infix2Postfix(expression) {
         postfix.push(stack.pop());
     }
     return postfix;
-
-    // 5.2 4 6 x + 3 3 4 5 x + sin x - 3 7.14 x +
 }
 
 function computePostfix(expression) {
-    // ['5.2', '4', '6', 'x', '+', '3', '3', '4', 'x', '+', 'sin', '5', 'x', '-', '3', '7.14', 'x', '+']
     let stack = [];
     for (let element of expression) {
         if (isNaN(element)) {
             switch (element) {
                 case '+':
-                    // Add
                     stack.push(stack.pop() + stack.pop());
                     break;
                 case '-':
-                    // Minus
                     stack.push(-stack.pop() + stack.pop());
                     break;
                 case 'x':
-                    // Multiple
                     stack.push(stack.pop() * stack.pop());
                     break;
                 case '÷':
-                    // Divide
                     stack.push(1/stack.pop() * stack.pop());
                     break;
                 case 'sin':
-                    // sin
                     stack.push(Math.sin(stack.pop()));
                     break;
                 case 'cos':
-                    // cos
                     stack.push(Math.cos(stack.pop()));
                     break;
                 case 'tan':
-                    // tan
                     stack.push(Math.tan(stack.pop()));
                     break;
                 default:

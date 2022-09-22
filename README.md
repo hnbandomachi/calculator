@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+# Calculator programming in ReactJS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+`This project is developed by Huy Le. The references are mentioned in the Reference category`
 
-## Available Scripts
+## Structure Components
 
-In the project directory, you can run:
+## Expression Parsing with Stack
 
-### `npm start`
+### Infix to Postfix transformation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+When we meet the `'+' or '-'` operators
+```javascript
+if (char === "+" || char === "-") {
+    postfix.push(number);
+    number = "";
+    let indexPop =
+        stack.indexOf('sin') >= 0 ? stack.indexOf('sin') + 1 :
+            stack.indexOf('cos') >= 0 ? stack.indexOf('cos') + 1 :
+                stack.indexOf('tan') >= 0 ? stack.indexOf('tan') + 1 :
+                    stack.indexOf('+') >= 0 ? stack.indexOf('+') :
+                        stack.indexOf('-') >= 0 ? stack.indexOf('-') : stack.length;
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    for (let i = stack.length; i > indexPop; i--) {
+        postfix.push(stack.pop());
+    }
+    stack.push(char);
+}
+```
 
-### `npm test`
+When we meet the `'x' or '÷'` operators
+```javascript
+else if (char === "x" || char === "÷") {
+    postfix.push(number);
+    number = "";
+    stack.push(char);
+}
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When we meet the `'sin' or 'cos' or 'tan'` operators
+```javascript
+else if (char === "s" || char === "c" || char === "t") {
+    index += 3;
+    number = "";
+    stack.push(char === "s" ? "sin" : char === "c" ? "cos" : "tan");
+}
+```
 
-### `npm run build`
+When we meet the `'(' or ')'` operators
+```javascript
+else if (char === "(" || char === ")") {
+    if (char === "(") {
+        stack.push("(");
+    } else {
+        for (let i = stack.length; i > index_open; i--) {
+            postfix.push(stack[i] === "(" ? "" : stack.pop());
+        }
+    }
+}
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+When we meet the `number`
+```javascript
+else {
+    number += char;
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Priority of operators
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Process function
+```javascript
+function computePostfix(expression) {
+    let stack = [];
+    for (let element of expression) {
+        if (isNaN(element)) {
+            switch (element) {
+                case '+':
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case '-':
+                    stack.push(-stack.pop() + stack.pop());
+                    break;
+                case 'x':
+                    stack.push(stack.pop() * stack.pop());
+                    break;
+                case '÷':
+                    stack.push(1/stack.pop() * stack.pop());
+                    break;
+                case 'sin':
+                    stack.push(Math.sin(stack.pop()));
+                    break;
+                case 'cos':
+                    stack.push(Math.cos(stack.pop()));
+                    break;
+                case 'tan':
+                    stack.push(Math.tan(stack.pop()));
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            stack.push(Number(element));
+        }
+    }
+    return stack[0];
+}
+```
+## References
+[1]
 
-### `npm run eject`
+[2]
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+[3]
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[4]
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
