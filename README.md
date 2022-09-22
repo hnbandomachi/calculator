@@ -3,6 +3,8 @@
 `This project is developed by Huy Le. The references are mentioned in the Reference category`
 
 ## Structure Components
+<img src="img/calculator_reactjs-components.jpg" >
+
 
 ## Expression Parsing with Stack
 
