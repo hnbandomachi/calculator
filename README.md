@@ -4,6 +4,8 @@
 
 ## Structure Components
 <img src="img/calculator_reactjs-components.jpg" >
+<br>
+<img src="img/calculator_reactjs-sequence-diagram.jpg" >
 
 
 ## Expression Parsing with Stack
