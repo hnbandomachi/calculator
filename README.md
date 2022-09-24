@@ -12,6 +12,8 @@
 
 ### Infix to Postfix transformation
 
+![Alt Text](https://raw.githubusercontent.com/hnbandomachi/calculator/main/img/Infix2PostfixGif.gif)
+
 When we meet the `'+' or '-'` operators
 ```javascript
 if (char === "+" || char === "-") {
