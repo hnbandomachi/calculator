@@ -35,6 +35,8 @@ function Infix2Postfix(expression) {
             if (char === "(") {
                 stack.push("(");
             } else {
+                postfix.push(number);
+                number = "";
                 for (let i = stack.length; i > index_open; i--) {
                     postfix.push(stack[i] === "(" ? "" : stack.pop());
                 }
@@ -44,6 +46,7 @@ function Infix2Postfix(expression) {
         }
     }
     postfix.push(number);
+    postfix = postfix.filter(Boolean);
     for (let i = stack.length; i > 0; i--) {
         postfix.push(stack.pop());
     }
@@ -93,7 +96,7 @@ export default function calculate(stateObj, btn) {
         stateObj.expression = "0";
     } else if (btn === "=") {
         console.log("Button = is clicked");
-        let postfixExpression = Infix2Postfix("5.2+4x6-3xsin3+4x5)+3x7.14");
+        let postfixExpression = Infix2Postfix("5.2+4x6-3xsin(3+4x5)+3x7.14");
         // let postfixExpression = Infix2Postfix(stateObj.expression);
         let result = computePostfix(postfixExpression);
         stateObj.expression = "=";

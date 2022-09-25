@@ -74,6 +74,9 @@ else {
 ### Priority of operators
 
 ### Process function
+![Alt Text](https://raw.githubusercontent.com/hnbandomachi/calculator/main/img/computePostfixGif.gif)
+
+
 ```javascript
 function computePostfix(expression) {
     let stack = [];
