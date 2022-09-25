@@ -47,6 +47,7 @@ function Infix2Postfix(expression) {
     for (let i = stack.length; i > 0; i--) {
         postfix.push(stack.pop());
     }
+    console.log('postfix: ', postfix);
     return postfix;
 }
 
@@ -83,6 +84,7 @@ function computePostfix(expression) {
             stack.push(Number(element));
         }
     }
+    console.log("result: ", stack[0]);
     return stack[0];
 }
 
