@@ -2,6 +2,8 @@
 
 `This project is developed by Huy Le. The references are mentioned in the Reference category`
 
+<img src="img/UI.png" >
+
 ## Structure Components
 <img src="img/calculator_reactjs-components.jpg" >
 <br>
