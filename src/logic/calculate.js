@@ -2,22 +2,20 @@ function Infix2Postfix(expression) {
     let number = "";
     let postfix = [];
     let stack = [];
+    let openIndex = 0;
     for (let index = 0; index < expression.length; index++) {
         let char = expression[index];
-        let index_open =
-            stack.indexOf("(") >= 0 ? stack.indexOf("(") :
-                stack.indexOf("sin") >= 0 ? stack.indexOf("sin") :
-                    stack.indexOf("cos") >= 0 ? stack.indexOf("cos") :
-                        stack.indexOf("tan") >= 0 ? stack.indexOf("tan") : stack.length;
         if (char === "+" || char === "-") {
             postfix.push(number);
             number = "";
             let indexPop =
                 stack.indexOf('sin') >= 0 ? stack.indexOf('sin') + 1 :
-                    stack.indexOf('cos') >= 0 ? stack.indexOf('cos') + 1 :
-                        stack.indexOf('tan') >= 0 ? stack.indexOf('tan') + 1 :
-                            stack.indexOf('+') >= 0 ? stack.indexOf('+') :
-                                stack.indexOf('-') >= 0 ? stack.indexOf('-') : stack.length;
+                stack.indexOf('cos') >= 0 ? stack.indexOf('cos') + 1 :
+                stack.indexOf('tan') >= 0 ? stack.indexOf('tan') + 1 :
+                stack.indexOf('+') >= 0 ? stack.indexOf('+') :
+                stack.indexOf('-') >= 0 ? stack.indexOf('-') : 
+                stack.indexOf('x') >= 0 ? stack.indexOf('x') :
+                stack.indexOf('÷') >= 0 ? stack.indexOf('÷') :stack.length;
 
             for (let i = stack.length; i > indexPop; i--) {
                 postfix.push(stack.pop());
@@ -31,13 +29,15 @@ function Infix2Postfix(expression) {
             index += 3;
             number = "";
             stack.push(char === "s" ? "sin" : char === "c" ? "cos" : "tan");
+            openIndex = stack.length - 1;
         } else if (char === "(" || char === ")") {
             if (char === "(") {
                 stack.push("(");
+                openIndex = stack.length - 1;
             } else {
                 postfix.push(number);
                 number = "";
-                for (let i = stack.length; i > index_open; i--) {
+                for (let i = stack.length; i > openIndex; i--) {
                     postfix.push(stack[i] === "(" ? "" : stack.pop());
                 }
             }
@@ -50,7 +50,6 @@ function Infix2Postfix(expression) {
     for (let i = stack.length; i > 0; i--) {
         postfix.push(stack.pop());
     }
-    console.log('postfix: ', postfix);
     return postfix;
 }
 
@@ -87,7 +86,6 @@ function computePostfix(expression) {
             stack.push(Number(element));
         }
     }
-    console.log("result: ", stack[0]);
     return stack[0];
 }
 
@@ -95,12 +93,14 @@ export default function calculate(stateObj, btn) {
     if (btn === "AC") {
         stateObj.expression = "0";
     } else if (btn === "=") {
-        console.log("Button = is clicked");
-        let postfixExpression = Infix2Postfix("5.2+4x6-3xsin(3+4x5)+3x7.14");
-        // let postfixExpression = Infix2Postfix(stateObj.expression);
+        // let postfixExpression = Infix2Postfix("5.2+4x6-3xsin(3+4x5)+3x7.14");
+        let postfixExpression = Infix2Postfix(stateObj.expression);
         let result = computePostfix(postfixExpression);
-        stateObj.expression = "=";
+        stateObj.expression = result;
     } else {
+        if (stateObj.expression == "0") {
+            stateObj.expression = "";
+        }
         stateObj.expression += btn;
     }
     return stateObj;

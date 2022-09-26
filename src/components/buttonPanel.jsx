@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Button from "./button";
+import "./buttonPanel.css";
 
 class ButtonPanel extends Component {
 
@@ -9,11 +10,11 @@ class ButtonPanel extends Component {
 
   render() {
     return (
-      <div>
+      <div className="component-button-panel">
         <div>
-          <Button name="AC" clickHandler={this.handleClick} />
-          <Button name="+/-" clickHandler={this.handleClick} />
-          <Button name="%" clickHandler={this.handleClick} />
+          <Button name="sin(" clickHandler={this.handleClick} />
+          <Button name="cos(" clickHandler={this.handleClick} />
+          <Button name=")" clickHandler={this.handleClick} />
           <Button name="÷" clickHandler={this.handleClick} orange />
         </div>
         <div>
@@ -35,7 +36,8 @@ class ButtonPanel extends Component {
           <Button name="+" clickHandler={this.handleClick} orange />
         </div>
         <div>
-          <Button name="0" clickHandler={this.handleClick} wide />
+          <Button name="AC" clickHandler={this.handleClick} />
+          <Button name="0" clickHandler={this.handleClick} />
           <Button name="." clickHandler={this.handleClick} />
           <Button name="=" clickHandler={this.handleClick} orange />
         </div>

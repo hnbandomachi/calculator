@@ -18,7 +18,7 @@ class App extends Component {
 
   render() { 
     return (
-      <div>
+      <div className='component-app'>
         <Display expression={this.state.expression}/>
         <ButtonPanel clickHandler={this.handleClick}/>
       </div>

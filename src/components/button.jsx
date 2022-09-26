@@ -9,9 +9,8 @@ class Button extends Component {
   };
 
   render() {
-    // const class_btn = this.props.orange? 'orange':(this.props.wide? 'wide': "btn-component");
     const class_btn = [
-      "btn-component",
+      "component-button",
       this.props.orange ? "orange" : "",
       this.props.wide ? "wide" : "",
     ];
