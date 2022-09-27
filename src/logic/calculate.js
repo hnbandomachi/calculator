@@ -11,7 +11,6 @@ function Infix2Postfix(expression) {
             let indexPop =
                 stack.indexOf('sin') >= 0 ? stack.indexOf('sin') + 1 :
                 stack.indexOf('cos') >= 0 ? stack.indexOf('cos') + 1 :
-                stack.indexOf('tan') >= 0 ? stack.indexOf('tan') + 1 :
                 stack.indexOf('+') >= 0 ? stack.indexOf('+') :
                 stack.indexOf('-') >= 0 ? stack.indexOf('-') : 
                 stack.indexOf('x') >= 0 ? stack.indexOf('x') :
@@ -25,10 +24,10 @@ function Infix2Postfix(expression) {
             postfix.push(number);
             number = "";
             stack.push(char);
-        } else if (char === "s" || char === "c" || char === "t") {
+        } else if (char === "s" || char === "c") {
             index += 3;
             number = "";
-            stack.push(char === "s" ? "sin" : char === "c" ? "cos" : "tan");
+            stack.push(char === "s" ? "sin" :"cos");
             openIndex = stack.length - 1;
         } else if (char === "(" || char === ")") {
             if (char === "(") {
@@ -75,9 +74,6 @@ function computePostfix(expression) {
                     break;
                 case 'cos':
                     stack.push(Math.cos(stack.pop()));
-                    break;
-                case 'tan':
-                    stack.push(Math.tan(stack.pop()));
                     break;
                 default:
                     break;

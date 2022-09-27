@@ -12,68 +12,72 @@
 
 ## Expression Parsing with Stack
 
-### Infix to Postfix transformation
+### Infix to Postfix transformation 
+
 
 ![Alt Text](https://raw.githubusercontent.com/hnbandomachi/calculator/main/img/Infix2PostfixGif.gif)
 
 When we meet the `'+' or '-'` operators
 ```javascript
-if (char === "+" || char === "-") {
-    postfix.push(number);
-    number = "";
-    let indexPop =
-        stack.indexOf('sin') >= 0 ? stack.indexOf('sin') + 1 :
-            stack.indexOf('cos') >= 0 ? stack.indexOf('cos') + 1 :
-                stack.indexOf('tan') >= 0 ? stack.indexOf('tan') + 1 :
-                    stack.indexOf('+') >= 0 ? stack.indexOf('+') :
-                        stack.indexOf('-') >= 0 ? stack.indexOf('-') : stack.length;
+        if (char === "+" || char === "-") {
+            postfix.push(number);
+            number = "";
+            let indexPop =
+                stack.indexOf('sin') >= 0 ? stack.indexOf('sin') + 1 :
+                stack.indexOf('cos') >= 0 ? stack.indexOf('cos') + 1 :
+                stack.indexOf('+') >= 0 ? stack.indexOf('+') :
+                stack.indexOf('-') >= 0 ? stack.indexOf('-') : 
+                stack.indexOf('x') >= 0 ? stack.indexOf('x') :
+                stack.indexOf('÷') >= 0 ? stack.indexOf('÷') :stack.length;
 
-    for (let i = stack.length; i > indexPop; i--) {
-        postfix.push(stack.pop());
-    }
-    stack.push(char);
-}
+            for (let i = stack.length; i > indexPop; i--) {
+                postfix.push(stack.pop());
+            }
+            stack.push(char);
+        }
 ```
 
 When we meet the `'x' or '÷'` operators
 ```javascript
-else if (char === "x" || char === "÷") {
-    postfix.push(number);
-    number = "";
-    stack.push(char);
-}
+        else if (char === "x" || char === "÷") {
+                    postfix.push(number);
+                    number = "";
+                    stack.push(char);
+        }
 ```
 
-When we meet the `'sin' or 'cos' or 'tan'` operators
+When we meet the `'sin' or 'cos' ` operators
 ```javascript
-else if (char === "s" || char === "c" || char === "t") {
-    index += 3;
-    number = "";
-    stack.push(char === "s" ? "sin" : char === "c" ? "cos" : "tan");
-}
+        else if (char === "s" || char === "c") {
+                index += 3;
+                number = "";
+                stack.push(char === "s" ? "sin" : "cos");
+                openIndex = stack.length - 1;
+        }
 ```
 
 When we meet the `'(' or ')'` operators
 ```javascript
-else if (char === "(" || char === ")") {
-    if (char === "(") {
-        stack.push("(");
-    } else {
-        for (let i = stack.length; i > index_open; i--) {
-            postfix.push(stack[i] === "(" ? "" : stack.pop());
+        else if (char === "(" || char === ")") {
+            if (char === "(") {
+                stack.push("(");
+                openIndex = stack.length - 1;
+            } else {
+                postfix.push(number);
+                number = "";
+                for (let i = stack.length; i > openIndex; i--) {
+                    postfix.push(stack[i] === "(" ? "" : stack.pop());
+                }
+            }
         }
-    }
-}
 ```
 
 When we meet the `number`
 ```javascript
-else {
-    number += char;
-}
+        else {
+            number += char;
+        }
 ```
-
-### Priority of operators
 
 ### Process function
 ![Alt Text](https://raw.githubusercontent.com/hnbandomachi/calculator/main/img/computePostfixGif.gif)
@@ -103,9 +107,6 @@ function computePostfix(expression) {
                 case 'cos':
                     stack.push(Math.cos(stack.pop()));
                     break;
-                case 'tan':
-                    stack.push(Math.tan(stack.pop()));
-                    break;
                 default:
                     break;
             }
@@ -117,11 +118,6 @@ function computePostfix(expression) {
 }
 ```
 ## References
-[1]
+[1] A. H. Farmer, "Calculator," ht<span>tps://github.com/ahfarmer/calculator</span>, 03-Jun-2019. [Online]. Available: ht<span>tps://github.com</span> [Accessed: 27-Sep-2022]. 
 
-[2]
-
-[3]
-
-[4]
-
+[2] Richard F. Gilberg, Behrouz A. Forouzan, "Data Structures - A Pseudocode Approach with C," in <i> Stack Applications</i>. Course Technology, 2005, pp. 102-134.
